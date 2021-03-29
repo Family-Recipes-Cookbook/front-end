@@ -1,5 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  FormContainer,
+  InputContainer,
+  Input,
+  Button,
+} from "./StyledComponents";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import schema from "../validation/register_schema";
@@ -80,57 +86,46 @@ const Register = () => {
 
   return (
     <FormContainer>
-      <h1>SignUp</h1>
-      <h2>Welcome to the Family Recipes Cookbook</h2>
-
       <form className="form-container" onSubmit={onSubmit}>
-        <label>
-          <input
-            name="email"
-            type="email"
-            value={formValues.email}
-            onChange={onChange}
-            placeholder="Email"
-          ></input>
-          <p>{formErrors.email}</p>
-        </label>
-        <label>
-          <input
-            name="username"
-            type="text"
-            value={formValues.name}
-            onChange={onChange}
-            placeholder="Username"
-          ></input>
-          <p>{formErrors.username}</p>
-        </label>
-        <label>
-          <input
-            name="password"
-            type="password"
-            value={formValues.password}
-            onChange={onChange}
-            placeholder="Password"
-          ></input>
-          <p>{formErrors.password}</p>
-        </label>
-        <button disabled={disabled}>Login</button>
+        <h1>SignUp</h1>
+        <h2>Welcome to the Family Recipes Cookbook</h2>
+
+        <InputContainer>
+          <label>
+            <Input
+              name="email"
+              type="email"
+              value={formValues.email}
+              onChange={onChange}
+              placeholder="Email"
+            />
+            <p>{formErrors.email}</p>
+          </label>
+          <label>
+            <Input
+              name="username"
+              type="text"
+              value={formValues.name}
+              onChange={onChange}
+              placeholder="Username"
+            />
+            <p>{formErrors.username}</p>
+          </label>
+          <label>
+            <Input
+              name="password"
+              type="password"
+              value={formValues.password}
+              onChange={onChange}
+              placeholder="Password"
+            />
+            <p>{formErrors.password}</p>
+          </label>
+          <Button disabled={disabled}>Login</Button>
+        </InputContainer>
       </form>
     </FormContainer>
   );
 };
-const FormContainer = styled.div`
-  border: 1px solid darkgrey;
-  border-radius: 20px;
-  color: #0e2923;
-  margin: 3rem 16rem;
-  padding: 2rem;
-  text-align: center;
 
-  backdrop-filter: blur(5px);
-
-  button {
-    align-self: center;
-  }
-`;
 export default Register;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Question, FormContainer, Input, Button } from "./StyledComponents";
 import { Row, Col } from "reactstrap";
 import axios from "axios";
 
@@ -81,41 +82,4 @@ const RecipeList = () => {
   );
 };
 
-const Question = styled.h3`
-  color: red;
-  text-shadow: 2px 2px 2px rgba(255, 255, 255, 0);
-`;
-
-const FormContainer = styled.div`
-  border: 1px solid darkgrey;
-  border-radius: 20px;
-  color: #0e2923;
-  margin: 3rem 16rem;
-  padding: 2rem;
-  text-align: center;
-
-  backdrop-filter: blur(5px);
-`;
-const Input = styled.input`
-  border: 2px solid darkgrey;
-  border-radius: 10px;
-  font-size: 1em;
-
-  padding: 14px;
-  width: 100%;
-`;
-const Button = styled.button`
-  background-color: #0e2923;
-  border: 0;
-  border-radius: 5px;
-  color: white;
-  height: 3rem;
-  letter-spacing: 0.175em;
-  line-height: 3rem;
-  margin: 1rem auto;
-  padding: 0 2rem;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-`;
 export default RecipeList;
