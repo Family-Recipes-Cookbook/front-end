@@ -117,6 +117,9 @@ const FormContainer = styled.div`
   text-align: center;
 
   backdrop-filter: blur(5px);
+
+  button {
+    align-self: center;
 `;
 
 export default Login;

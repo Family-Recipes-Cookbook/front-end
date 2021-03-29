@@ -129,11 +129,8 @@ const FormContainer = styled.div`
 
   backdrop-filter: blur(5px);
 
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background-color: black;
+  button {
+    align-self: center;
   }
 `;
 export default Register;
