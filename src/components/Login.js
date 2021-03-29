@@ -25,9 +25,9 @@ const Login = () => {
   const [disabled, setDisabled] = useState(true);
   //////////HELPERS//////////
 
-  const postLogin = (cleanLoginValues) => {
+  const postLogin = (cleanFormValues) => {
     // axios
-    alert(cleanLoginValues);
+    alert(cleanFormValues);
   };
   //////////EVENT HANDLERS//////////
 
@@ -58,11 +58,11 @@ const Login = () => {
   };
 
   const submitForm = () => {
-    const cleanLoginValues = {
+    const cleanFormValues = {
       username: formValues.username.trim(),
       password: formValues.password.trim(),
     };
-    postLogin(cleanLoginValues);
+    postLogin(cleanFormValues);
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -79,10 +79,9 @@ const Login = () => {
   return (
     <FormContainer>
       <h1>Login</h1>
-      <h3>Welcome to the Family Recipes Cookbook</h3>
+      <h2>Welcome to the Family Recipes Cookbook</h2>
 
       <form className="form-container" onSubmit={onSubmit}>
-        {/* Register component prop or ""*/}
         <label>
           <input
             name="username"
