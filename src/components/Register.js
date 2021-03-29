@@ -80,7 +80,7 @@ const Register = () => {
 
   return (
     <FormContainer>
-      <h1>Login</h1>
+      <h1>SignUp</h1>
       <h2>Welcome to the Family Recipes Cookbook</h2>
 
       <form className="form-container" onSubmit={onSubmit}>
