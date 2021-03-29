@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
+import { Title, FormContainer, Button } from "./StyledComponents";
 import { useHistory } from "react-router-dom";
 
 // const RecipeCard = ({ recipe }) => {
@@ -37,43 +38,25 @@ const RecipeCard = (recipe) => {
           <Title> Instructions: </Title>
           {recipe.instructions}
         </h3>
-        <button
+        <Button
           className="edit-button"
           onClick={() => {
             setEdit(true);
           }}
         >
           EDIT
-        </button>
-        <button
+        </Button>
+        <Button
           className="edit-button"
           onClick={() => {
             setEdit(false);
           }}
         >
           SAVE
-        </button>
+        </Button>
       </FormContainer>
     </div>
   );
 };
 
-const Title = styled.h2`
-  color: purple;
-`;
-
-const FormContainer = styled.div`
-  border: 1px solid darkgrey;
-  border-radius: 20px;
-  color: #0e2923;
-  margin: auto;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  line-height: 1.5;
-  display: inline-block;
-  vertical-align: middle;
-`;
 export default RecipeCard;
