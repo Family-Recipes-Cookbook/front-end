@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+
+// components
+import Navigation from "./Navigation";
+import AddNewRecipe from "./components/AddRecipe";
+import EditRecipe from "./components/EditRecipe";
+
+import RecipeList from "./components/RecipeList";
+import RegistrationForm from "./components/Register";
+import LoginForm from "./components/Login";
+
+import "./App.css";
+import RecipeCard from "./components/RecipeCard";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navigation />
+      <div className="realApp">
+        <Switch>
+          <Route path="/addrecipe" component={AddNewRecipe} />
+          <Route path="/editrecipe" component={EditRecipe} />
+          <Route path="/recipecard" component={RecipeCard} />
+          <Route path="/recipes" component={RecipeList} />
+          <Route path="/registration" component={RegistrationForm} />
+          <Route path="/login" component={LoginForm} />
+
+          <Route path="/" component={RecipeList} />
+        </Switch>
+      </div>
     </div>
   );
 }
