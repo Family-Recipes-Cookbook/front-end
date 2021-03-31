@@ -41,7 +41,7 @@ const Register = () => {
 
   const postLogin = (cleanFormValues) => {
     // axios
-    alert(cleanFormValues);
+    alert(JSON.stringify(cleanFormValues));
   };
   //////////EVENT HANDLERS//////////
 
@@ -77,7 +77,7 @@ const Register = () => {
       password: formValues.password.trim(),
       personalName: formValues.personalName.trim(),
       age: parseInt(formValues.age).toString(),
-      phone: parseInt(formValues.phone).toString(),
+      phone: formValues.phone.toString(),
     };
     postLogin(cleanFormValues);
   };
@@ -161,7 +161,7 @@ const Register = () => {
             />
             <strong className="error-message">{formErrors.password}</strong>
           </label>
-          <Button disabled={disabled}>Login</Button>
+          <Button disabled={disabled}>SignUp</Button>
         </InputContainer>
       </form>
     </FormContainer>
