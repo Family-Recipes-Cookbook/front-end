@@ -75,9 +75,9 @@ const Register = () => {
     const cleanFormValues = {
       username: formValues.username.trim(),
       password: formValues.password.trim(),
-      personalName: formValues.name.trim(),
+      personalName: formValues.personalName.trim(),
       age: parseInt(formValues.age).toString(),
-      phone: parseInt(formValues).phone.toString(),
+      phone: parseInt(formValues.phone).toString(),
     };
     postLogin(cleanFormValues);
   };
