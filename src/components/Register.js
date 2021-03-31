@@ -108,7 +108,7 @@ const Register = () => {
               value={formValues.personalName}
               placeholder="Name"
             />
-            <p>{formErrors.personalName}</p>
+            <p className="error-message">{formErrors.personalName}</p>
           </label>
           <label>
             <Input
@@ -118,7 +118,7 @@ const Register = () => {
               value={formValues.age}
               placeholder="Age in years"
             />
-            <p>{formErrors.age}</p>
+            <p className="error-message">{formErrors.age}</p>
           </label>
           <label>
             <Input
@@ -129,7 +129,7 @@ const Register = () => {
               placeholder="Phone 123-456-7890"
               pattern="[0-9]{3}-[0-9{3}-[0-9]{3}"
             />
-            <p>{formErrors.phone}</p>
+            <p className="error-message">{formErrors.phone}</p>
           </label>
           <label>
             <Input
@@ -139,7 +139,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Email"
             />
-            <p>{formErrors.email}</p>
+            <p className="error-message">{formErrors.email}</p>
           </label>
           <label>
             <Input
@@ -149,7 +149,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Username"
             />
-            <p>{formErrors.username}</p>
+            <p className="error-message">{formErrors.username}</p>
           </label>
           <label>
             <Input
@@ -159,7 +159,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Password"
             />
-            <p>{formErrors.password}</p>
+            <p className="error-message">{formErrors.password}</p>
           </label>
           <Button disabled={disabled}>Login</Button>
         </InputContainer>
