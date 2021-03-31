@@ -108,7 +108,7 @@ const Register = () => {
               value={formValues.personalName}
               placeholder="Name"
             />
-            <p className="error-message">{formErrors.personalName}</p>
+            <strong className="error-message">{formErrors.personalName}</strong>
           </label>
           <label>
             <Input
@@ -118,7 +118,7 @@ const Register = () => {
               value={formValues.age}
               placeholder="Age in years"
             />
-            <p className="error-message">{formErrors.age}</p>
+            <strong className="error-message">{formErrors.age}</strong>
           </label>
           <label>
             <Input
@@ -129,7 +129,7 @@ const Register = () => {
               placeholder="Phone 123-456-7890"
               pattern="[0-9]{3}-[0-9{3}-[0-9]{3}"
             />
-            <p className="error-message">{formErrors.phone}</p>
+            <strong className="error-message">{formErrors.phone}</strong>
           </label>
           <label>
             <Input
@@ -139,7 +139,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Email"
             />
-            <p className="error-message">{formErrors.email}</p>
+            <strong className="error-message">{formErrors.email}</strong>
           </label>
           <label>
             <Input
@@ -149,7 +149,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Username"
             />
-            <p className="error-message">{formErrors.username}</p>
+            <strong className="error-message">{formErrors.username}</strong>
           </label>
           <label>
             <Input
@@ -159,7 +159,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Password"
             />
-            <p className="error-message">{formErrors.password}</p>
+            <strong className="error-message">{formErrors.password}</strong>
           </label>
           <Button disabled={disabled}>Login</Button>
         </InputContainer>
