@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import {
   FormContainer,
   InputContainer,
@@ -16,11 +16,17 @@ const initialFormValues = {
   email: "",
   username: "",
   password: "",
+  personalName: "",
+  age: "",
+  phone: "",
 };
 const initialFormErrors = {
   email: "",
   username: "",
   password: "",
+  personalName: "",
+  age: "",
+  phone: "",
 };
 
 //////////MAIN FUNCTION//////////
@@ -91,6 +97,16 @@ const Register = () => {
         <h2>Welcome to the Family Recipes Cookbook</h2>
 
         <InputContainer>
+          <label>
+            <Input
+              name="personalName"
+              type="string"
+              onChange={onChange}
+              value={formValues.personalName}
+              placeholder="Name"
+            />
+            <p>{formErrors.personalName}</p>
+          </label>
           <label>
             <Input
               name="email"
