@@ -75,6 +75,9 @@ const Register = () => {
     const cleanFormValues = {
       username: formValues.username.trim(),
       password: formValues.password.trim(),
+      personalName: formValues.name.trim(),
+      age: parseInt(formValues.age).toString(),
+      phone: parseInt(formValues).phone.toString(),
     };
     postLogin(cleanFormValues);
   };
@@ -106,6 +109,27 @@ const Register = () => {
               placeholder="Name"
             />
             <p>{formErrors.personalName}</p>
+          </label>
+          <label>
+            <Input
+              name="age"
+              type="string"
+              onChange={onChange}
+              value={formValues.age}
+              placeholder="Age in years"
+            />
+            <p>{formErrors.age}</p>
+          </label>
+          <label>
+            <Input
+              name="phone"
+              type="tel"
+              value={formValues.phone}
+              onChange={onChange}
+              placeholder="Phone 123-456-7890"
+              pattern="[0-9]{3}-[0-9{3}-[0-9]{3}"
+            />
+            <p>{formErrors.phone}</p>
           </label>
           <label>
             <Input
