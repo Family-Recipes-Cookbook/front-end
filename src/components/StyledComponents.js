@@ -25,6 +25,10 @@ const InputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 4rem;
+
+  .error-message {
+    color: red;
+  }
 `;
 
 const Input = styled.input`

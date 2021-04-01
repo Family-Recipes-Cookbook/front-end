@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import {
   FormContainer,
   InputContainer,
@@ -16,11 +16,17 @@ const initialFormValues = {
   email: "",
   username: "",
   password: "",
+  personalName: "",
+  age: "",
+  phone: "",
 };
 const initialFormErrors = {
   email: "",
   username: "",
   password: "",
+  personalName: "",
+  age: "",
+  phone: "",
 };
 
 //////////MAIN FUNCTION//////////
@@ -35,7 +41,7 @@ const Register = () => {
 
   const postLogin = (cleanFormValues) => {
     // axios
-    alert(cleanFormValues);
+    alert(JSON.stringify(cleanFormValues));
   };
   //////////EVENT HANDLERS//////////
 
@@ -69,6 +75,9 @@ const Register = () => {
     const cleanFormValues = {
       username: formValues.username.trim(),
       password: formValues.password.trim(),
+      personalName: formValues.personalName.trim(),
+      age: parseInt(formValues.age).toString(),
+      phone: formValues.phone.toString(),
     };
     postLogin(cleanFormValues);
   };
@@ -93,13 +102,44 @@ const Register = () => {
         <InputContainer>
           <label>
             <Input
+              name="personalName"
+              type="string"
+              onChange={onChange}
+              value={formValues.personalName}
+              placeholder="Name"
+            />
+            <strong className="error-message">{formErrors.personalName}</strong>
+          </label>
+          <label>
+            <Input
+              name="age"
+              type="string"
+              onChange={onChange}
+              value={formValues.age}
+              placeholder="Age in years"
+            />
+            <strong className="error-message">{formErrors.age}</strong>
+          </label>
+          <label>
+            <Input
+              name="phone"
+              type="tel"
+              value={formValues.phone}
+              onChange={onChange}
+              placeholder="Phone 123-456-7890"
+              pattern="[0-9]{3}-[0-9{3}-[0-9]{3}"
+            />
+            <strong className="error-message">{formErrors.phone}</strong>
+          </label>
+          <label>
+            <Input
               name="email"
               type="email"
               value={formValues.email}
               onChange={onChange}
               placeholder="Email"
             />
-            <p>{formErrors.email}</p>
+            <strong className="error-message">{formErrors.email}</strong>
           </label>
           <label>
             <Input
@@ -109,7 +149,7 @@ const Register = () => {
               onChange={onChange}
               placeholder="Username"
             />
-            <p>{formErrors.username}</p>
+            <strong className="error-message">{formErrors.username}</strong>
           </label>
           <label>
             <Input
@@ -119,9 +159,9 @@ const Register = () => {
               onChange={onChange}
               placeholder="Password"
             />
-            <p>{formErrors.password}</p>
+            <strong className="error-message">{formErrors.password}</strong>
           </label>
-          <Button disabled={disabled}>Login</Button>
+          <Button disabled={disabled}>SignUp</Button>
         </InputContainer>
       </form>
     </FormContainer>
