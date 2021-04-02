@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import * as yup from "yup";
-import { useHistory } from "react-router-dom";
+
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { axiosWithAuth } from '../helpers/axiosWithAuth';
-import Ingredient from './Ingredients';
-import Instructions from './Instructions';
+
 import axios from "axios";
 // import { Button } from "reactstrap";
 
@@ -15,12 +14,10 @@ const initialState = {
 };
 
 const AddRecipe = () => {
-  // const userId = Number(localStorage.getItem('userId'))
+ 
   const [newRecipe, setNewRecipe] = useState(initialState);
-  // const [ ingredients, setIngredients ] = useState({ingredient_amount: "", ingredient_name: ""});
-  // const [ instructions, setInstructions ] = useState({instruction_description: ""});
-  // const userId = Number(localStorage.getItem("userId"));
-
+  const [ ingredients, setIngredient] = useState({ingredient_amount: '', ingredient_name: ''});
+  const [ instructions, setInstructions] = useState({instruction_description: ""})
   const history = useHistory();
   
 
@@ -29,39 +26,53 @@ const AddRecipe = () => {
       ...newRecipe,
       [e.target.name]: e.target.value,
     });
-    // setIngredients({...ingredients, [e.target.name]: e.target.value})
-    // setInstructions({...instructions, [e.target.name]: e.target.value})
-  };
 
-  const handleSubmit = (e) => {
-    console.log(newRecipe)
+  };
+  const handleIngredients = (e) => {
+    setIngredient({
+      ...ingredients,
+      [e.target.name]: e.target.value,
+    });
+  }
+  const handleInstructions = (e) => {
+    setInstructions({
+      ...instructions,
+      [e.target.name]: e.target.value,
+    });
+  }
+  function handleSubmit(e){
     e.preventDefault();
-    // setNewRecipe({
-    //   title: newRecipe.title,
-    //   source: newRecipe.source,
-    //   ingredients: newRecipe.ingredients,
-    //   instructions: newRecipe.instructions,
-    //   category: newRecipe.category,
-    // });
-    axios
-    .post("https://tt18familyrecipe.herokuapp.com/api/recipes", newRecipe)
+   axiosWithAuth()
+    .post("/recipes", newRecipe)
     .then(res=>{
-    
-      console.log("Adding Recipe Successfull", res.data)
-      
-      history.push("/recipes")
-    })
+      console.log(res.data)
+        axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/ingredients`, ingredients)
+        .then(()=>{
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      })
+    .then((res)=>{
+      debugger
+      axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/instructions`, instructions)
+        .then(()=>{
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      })
     .catch(err=>{
       console.log("Adding Recipe Unsuccessfull: ", err.response)
     })
-    
+    history.push('/recipes')
   };
 
   
 
   return (
     <FormContainer>
-      <form onSubmit={handleSubmit}>
+      <form>
         <h1>Add a Recipe</h1>
         <InputContainer>
           <label htmlFor="title">
@@ -96,12 +107,11 @@ const AddRecipe = () => {
           </label> 
           
           
-          <Button type="submit">Add Recipe</Button>
+          
         </InputContainer>
        </form>
-      <Ingredient />
-      <Instructions />
-      {/* <form>
+
+      <form>
         <InputContainer>
           <label htmlFor="ingredients">
                 <h2>Ingredients:</h2>
@@ -110,7 +120,7 @@ const AddRecipe = () => {
                 type="textarea"
                 name="ingredient_amount"
                 placeholder="Amount"
-                onChange={handleChange}
+                onChange={handleIngredients}
                 value={ingredients.ingredient_amount}
               />
             <label htmlFor="ingredients">
@@ -120,11 +130,12 @@ const AddRecipe = () => {
               type="textarea"
               name="ingredient_name"
               placeholder="Ingredient Name"
-              onChange={handleChange}
+              onChange={handleIngredients}
               value={ingredients.ingredient_name}
             />
         </InputContainer>
-      </form>
+        </form>
+      
       <form>
         <InputContainer>
           <label htmlFor="Instructions">
@@ -135,12 +146,13 @@ const AddRecipe = () => {
                   type="textarea"
                   name="instruction_description"
                   placeholder="Step by step instructions..."
-                  onChange={handleChange}
+                  onChange={handleInstructions}
                   value={instructions.instruction_description}
                 />
             </label>
         </InputContainer>
-      </form> */}
+       </form>
+        <Button onClick={(e)=>{handleSubmit(e)}}>Add Recipe</Button>
     </FormContainer>
   );
 };

@@ -15,7 +15,7 @@ import { fetchRecipeById } from "../actions/index"
 
 const RecipeCard = (props) => {
   const { recipe, ingredients, instructions } = props
-  console.log(instructions)
+  
   const history = useHistory()
   const {id} = useParams()
   // const [edit, setEdit] = useState(false);
@@ -36,7 +36,7 @@ const RecipeCard = (props) => {
         
           <Title> Title: </Title>
 
-          <h3>{recipe.Title}</h3>
+          <h3>{recipe.title}</h3>
         
         
           <Title> Source: </Title>
@@ -50,7 +50,7 @@ const RecipeCard = (props) => {
 
             return (
             <>
-            <Title> Ingredients: </Title>
+            <Title ingredient={ingredient.recipe_id}> Ingredients: </Title>
              <h3>{ingredient.ingredient_amount}</h3>
              <h3>{ingredient.ingredient_name}</h3>
             </>
@@ -59,7 +59,7 @@ const RecipeCard = (props) => {
           {instructions.map((instruction)=>{
             return(
               <>
-              <Title> Instructions: </Title>
+              <Title key={instruction.recipe_id}> Instructions: </Title>
               <h3>{instructions.instruction_description}</h3>
               </>
             )

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 // import styled from "styled-components";
 import {
   FormContainer,
@@ -7,7 +8,7 @@ import {
   Select,
   Button,
 } from "./StyledComponents";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const initialState = {
@@ -19,108 +20,100 @@ const initialState = {
 };
 
 const EditRecipe = () => {
-  // const { id } = useParams();
+  const { id } = useParams();
   const history = useHistory();
   const [recipe, setRecipe] = useState(initialState);
+  const [ ingredient, setIngredient ] = useState({ingredient_amount: '', ingredient_name: ''});
+  const [ instruction, setInstruction ] = useState({instruction_description: ""})
+
+  useEffect(() => {
+    axios
+      .get(`https://tt18familyrecipe.herokuapp.com/api/recipes/1`)
+      .then((res) => {
+        console.log("edit recipe get response", res.data);
+        setRecipe(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(recipe.title)
+  const changeIngredient = (ev) => {
+    
+    setIngredient({ ...ingredient, [ev.target.name]: ev.target.value });
+  };
+  const changeInstruction = (ev) => {
+    
+    setInstruction({ ...instruction, [ev.target.name]: ev.target.value });
+  };
+  const cancel = (e) => {
+    e.preventDefault();
+    history.push(`/recipes`);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Put recipe in handle submit");
-    axiosWithAuth().put('/recipes/:recipe_id/instructions/:instruction_id', recipe)
+    axiosWithAuth()
+      .put(`/recipes/${recipe.recipe_id}/ingredients`, ingredient)
+      .then(()=>{
+        console.log("ingredient was changed")
+      })
+      .catch((err)=>{
+        console.log(err.response)
+      })
+    axiosWithAuth()
+      .put(`/recipes/${recipe.recipe_id}/instructions`, recipe)
+      .then(()=>{
+        console.log("instructions was changed")
+      })
+      .catch((err)=>{
+        console.log(err.response)
+      })
+    history.push("/recipes")
   };
-
-  const changeHandler = (ev) => {
-    ev.persist();
-    setRecipe({ ...recipe, [ev.target.name]: ev.target.value });
-  };
-
-  const cancel = (e) => {
-    e.preventDefault();
-    // history.push(`/recipes/${id}`);
-  };
-
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get(`/recipes/${id}`)
-  //     .then((res) => {
-  //       console.log("edit recipe get response", res);
-  //       setRecipe(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   return (
     <FormContainer>
       <form onSubmit={handleSubmit}>
         <h1>Edit Recipe</h1>
+        <h2>{recipe.title}</h2>
+        <h2>{recipe.author}</h2>
+        <h2>{recipe.category}</h2>
         <InputContainer>
-          <label htmlFor="title">
-            <h2>Title:</h2>
-            <p>{recipe.title}</p>
-            <Input
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Recipe Title"
-              onChange={changeHandler}
-              value={recipe.title}
-            />
-          </label>
-          <label htmlFor="creator">
-            <h2>Creator:</h2>
-            <p>{recipe.author}</p>
-            <Input
-              type="text"
-              name="author"
-              id="source"
-              placeholder="Who created this?"
-              onChange={changeHandler}
-              value={recipe.author}
-            />
-          </label>
-          <label htmlFor="Category">
-            <h2>Category:</h2>
-
-            <Select name="category" value={recipe.category} onChange={changeHandler}>
-              <option value="">Add category</option>
-              <option value="Breakfast">Breakfast</option>
-              <option value="Lunch">Lunch</option>
-              <option value="Dinner">Dinner</option>
-              {/* <option>Cookies</option>
-              <option>Dessert</option>
-              <option>Bread</option>
-              <option>Salad</option>
-              <option>Soup</option> */}
-            </Select>
-          </label>
           <label htmlFor="ingredients">
             <h2>Ingredients:</h2>
           </label>
           <Input
             type="textarea"
-            name="ingredients"
+            name="ingredient_amount"
             id="ingredients"
             placeholder="List of ingredients..."
-            onChange={changeHandler}
-            // value={newRecipe.ingredients}
+            onChange={changeIngredient}
+            value={ingredient.ingredient_amount}
+          />
+          <Input
+            type="textarea"
+            name="ingredient_name"
+            id="ingredients"
+            placeholder="List of ingredients..."
+            onChange={changeIngredient}
+            value={ingredient.ingredient_name}
           />
           <label htmlFor="Instructions">
             <h2>Instructions:</h2>
             <Input
               type="textarea"
-              name="instructions"
+              name="instruction_decription"
               id="instructions"
               placeholder="Step by step instructions..."
-              onChange={changeHandler}
-              // value={newRecipe.instructions}
+              onChange={changeInstruction}
+              value={instruction.instruction_description}
             />
           </label>
           <Button type="submit">Save changes</Button>
-          <Link to="/recipes">
-            <Button> Cancel </Button>
-          </Link>
+          
+          <Button onClick={()=>{cancel()}}> Cancel </Button>
+         
         </InputContainer>
       </form>
     </FormContainer>
