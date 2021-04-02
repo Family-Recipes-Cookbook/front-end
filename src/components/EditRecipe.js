@@ -8,6 +8,7 @@ import {
   Button,
 } from "./StyledComponents";
 import { useHistory, Link } from "react-router-dom";
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const initialState = {
   title: "",
@@ -25,6 +26,7 @@ const EditRecipe = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Put recipe in handle submit");
+    axiosWithAuth().put('/recipes/:recipe_id/instructions/:instruction_id', recipe)
   };
 
   const changeHandler = (ev) => {
@@ -47,7 +49,7 @@ const EditRecipe = () => {
   //     .catch((err) => {
   //       console.log(err);
   //     });
-  // }, [id]);
+  // }, []);
 
   return (
     <FormContainer>
@@ -56,39 +58,41 @@ const EditRecipe = () => {
         <InputContainer>
           <label htmlFor="title">
             <h2>Title:</h2>
+            <p>{recipe.title}</p>
             <Input
               type="text"
               name="title"
               id="title"
               placeholder="Recipe Title"
               onChange={changeHandler}
-              // value={newRecipe.title}
+              value={recipe.title}
             />
           </label>
           <label htmlFor="creator">
             <h2>Creator:</h2>
+            <p>{recipe.author}</p>
             <Input
               type="text"
-              name="source"
+              name="author"
               id="source"
               placeholder="Who created this?"
               onChange={changeHandler}
-              // value={newRecipe.source}
+              value={recipe.author}
             />
           </label>
           <label htmlFor="Category">
             <h2>Category:</h2>
 
-            <Select>
-              <option>Add category</option>
-              <option>Lunch</option>
-              <option>Breakfast</option>
-              <option>Dinner</option>
-              <option>Cookies</option>
+            <Select name="category" value={recipe.category} onChange={changeHandler}>
+              <option value="">Add category</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              {/* <option>Cookies</option>
               <option>Dessert</option>
               <option>Bread</option>
               <option>Salad</option>
-              <option>Soup</option>
+              <option>Soup</option> */}
             </Select>
           </label>
           <label htmlFor="ingredients">

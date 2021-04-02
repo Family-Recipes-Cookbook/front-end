@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { connect } from 'react-redux';
+import { Link, useHistory, useParams } from "react-router-dom";
+// import styled from "styled-components";
 import { Question, FormContainer, Input, Button } from "./StyledComponents";
 import { Row, Col } from "reactstrap";
-import axios from "axios";
+// import axios from "axios";
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 // import { v4 as uuid } from "uuid";
 
-const RecipeList = () => {
+const RecipeList = (props) => {
   const [allRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const userId = Number(localStorage.getItem("userId"));
+  const history = useHistory()
+  // const { id } = useParams()
+  // const userId = Number(localStorage.getItem("userId"));
   // const [isFetching, setIsFetching] = useState(true);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("")
-  //     .then((res) => {
-  //        setAllRecipes(res.data.filter(recipe => recipe.userId === userId))
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [userId]);
+  useEffect(() => {
+    axiosWithAuth()
+      .get("/recipes")
+      .then((res) => {
+        console.log(res.data)
+         setAllRecipes(res.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -50,8 +55,11 @@ const RecipeList = () => {
           <Button type="submit">Search</Button>
         </div>
       </form>
+      {allRecipes.map((recipe)=>{
+        return(<RecipeCard key={recipe.recipe_id} recipe={recipe} ingredients={recipe.ingredients} instructions={recipe.instructions} />)
+      })}
       <Row>
-        {allRecipes.map((recipe) => {
+        {/* {allRecipes.map((recipe) => {
           if (
             recipe.title &&
             recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -62,24 +70,36 @@ const RecipeList = () => {
               </Col>
             );
           } else return null;
-        })}
+        })} */}
       </Row>
-      <div>
-        {allRecipes.map((item) => {
-          return <RecipeCard details={item} key={item.class_id} />;
+     
+      {/* <div>
+        {allRecipes.map((recipe) => {
+          return(
+          <div key={recipe.recipe_id}>
+            <h1>{recipe.title}</h1>
+            <h3>{recipe.author}</h3>
+            <button onClick={()=>{history.push(`/recipe/${recipe.recipe_id}`)}}>View Detials</button>
+          </div>)
+          // return <RecipeCard key={recipe.title} recipe={recipe}/>;
         })}
-      </div>
+      </div> */}
 
-      <div className="recipes">
+      {/* <div className="recipes">
         <div>
           <Question>No recipes yet?</Question>
           <Link to="/addrecipe">
             <Button type="submit">Add New Recipe</Button>
           </Link>
         </div>
-      </div>
+      </div> */}
     </FormContainer>
   );
 };
-
-export default RecipeList;
+const mapsStateToProps = state => {
+  return {
+      recipe: state.recipe,
+      
+  }
+}
+export default connect(mapsStateToProps, {})(RecipeList) ;

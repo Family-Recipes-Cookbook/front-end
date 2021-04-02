@@ -9,6 +9,8 @@ import {
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import schema from "../validation/register_schema";
+import axios from "axios";
+import { useHistory } from "react-router";
 
 //////////INITIAL VALUES//////////
 
@@ -16,7 +18,7 @@ const initialFormValues = {
   email: "",
   username: "",
   password: "",
-  personalName: "",
+  name: "",
   age: "",
   phone: "",
 };
@@ -24,7 +26,7 @@ const initialFormErrors = {
   email: "",
   username: "",
   password: "",
-  personalName: "",
+  name: "",
   age: "",
   phone: "",
 };
@@ -32,6 +34,7 @@ const initialFormErrors = {
 //////////MAIN FUNCTION//////////
 
 const Register = () => {
+
   //////////STATES//////////
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -41,7 +44,7 @@ const Register = () => {
 
   const postLogin = (cleanFormValues) => {
     // axios
-    alert(JSON.stringify(cleanFormValues));
+    // alert(JSON.stringify(cleanFormValues));
   };
   //////////EVENT HANDLERS//////////
 
@@ -75,15 +78,25 @@ const Register = () => {
     const cleanFormValues = {
       username: formValues.username.trim(),
       password: formValues.password.trim(),
-      personalName: formValues.personalName.trim(),
+      personalName: formValues.name.trim(),
       age: parseInt(formValues.age).toString(),
       phone: formValues.phone.toString(),
     };
     postLogin(cleanFormValues);
   };
+  const history = useHistory()
   const onSubmit = (e) => {
     e.preventDefault();
     submitForm();
+    axios.post('https://tt18familyrecipe.herokuapp.com/api/auth/register', formValues)
+    .then(res=>{
+      console.log("success")
+      console.log(res)
+      history.push('/')
+    })
+    .catch(err=>{
+      console.log(err.response)
+    })
   };
   //////////EFFECTS//////////
 
@@ -102,10 +115,10 @@ const Register = () => {
         <InputContainer>
           <label>
             <Input
-              name="personalName"
+              name="name"
               type="string"
               onChange={onChange}
-              value={formValues.personalName}
+              value={formValues.name}
               placeholder="Name"
             />
             <strong className="error-message">{formErrors.personalName}</strong>
@@ -127,7 +140,7 @@ const Register = () => {
               value={formValues.phone}
               onChange={onChange}
               placeholder="Phone 123-456-7890"
-              pattern="[0-9]{3}-[0-9{3}-[0-9]{3}"
+              pattern="[0-9]{3}-[0-9{3}-[0-9]{4}"
             />
             <strong className="error-message">{formErrors.phone}</strong>
           </label>
@@ -145,7 +158,7 @@ const Register = () => {
             <Input
               name="username"
               type="text"
-              value={formValues.name}
+              value={formValues.username}
               onChange={onChange}
               placeholder="Username"
             />

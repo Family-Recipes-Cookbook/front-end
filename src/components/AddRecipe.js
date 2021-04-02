@@ -2,84 +2,62 @@ import React, { useState } from "react";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { axiosWithAuth } from '../helpers/axiosWithAuth';
+import Ingredient from './Ingredients';
+import Instructions from './Instructions';
+import axios from "axios";
 // import { Button } from "reactstrap";
 
 const initialState = {
   title: "",
-  source: "",
-  ingredients: "",
-  instructions: "",
+  author: "",
   category: "",
-  user_id: 1,
 };
 
 const AddRecipe = () => {
   // const userId = Number(localStorage.getItem('userId'))
   const [newRecipe, setNewRecipe] = useState(initialState);
-  const userId = Number(localStorage.getItem("userId"));
+  // const [ ingredients, setIngredients ] = useState({ingredient_amount: "", ingredient_name: ""});
+  // const [ instructions, setInstructions ] = useState({instruction_description: ""});
+  // const userId = Number(localStorage.getItem("userId"));
 
   const history = useHistory();
-  // const dispatch = useDispatch();
+  
 
   const handleChange = (e) => {
     setNewRecipe({
       ...newRecipe,
       [e.target.name]: e.target.value,
     });
+    // setIngredients({...ingredients, [e.target.name]: e.target.value})
+    // setInstructions({...instructions, [e.target.name]: e.target.value})
   };
 
   const handleSubmit = (e) => {
+    console.log(newRecipe)
     e.preventDefault();
-    setNewRecipe({
-      title: newRecipe.title,
-      source: newRecipe.source,
-      ingredients: newRecipe.ingredients,
-      instructions: newRecipe.instructions,
-      category: newRecipe.category,
-      user_id: userId,
-    });
-
-    history.push("/recipes");
+    // setNewRecipe({
+    //   title: newRecipe.title,
+    //   source: newRecipe.source,
+    //   ingredients: newRecipe.ingredients,
+    //   instructions: newRecipe.instructions,
+    //   category: newRecipe.category,
+    // });
+    axios
+    .post("https://tt18familyrecipe.herokuapp.com/api/recipes", newRecipe)
+    .then(res=>{
+    
+      console.log("Adding Recipe Successfull", res.data)
+      
+      history.push("/recipes")
+    })
+    .catch(err=>{
+      console.log("Adding Recipe Unsuccessfull: ", err.response)
+    })
+    
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   history.push("/recipes");
-  // };
-
-  //  const handleSubmit = (e) => {
-  //    e.preventDefault();
-  //    dispatch(
-  //      postAddRecipe({
-  //        title: newRecipe.title,
-  //        source: newRecipe.source,
-  //        ingredients: newRecipe.ingredients,
-  //        instructions: newRecipe.instructions,
-  //        category: newRecipe.category,
-  //        user_id: userId,
-  //      })
-  //    );
-  //    setNewRecipe(``);
-  //    history.push("/recipes");
-  //  };
-
-  //  const submit = (event) => {
-  //    event.preventDefault();
-
-  //      .post(
-  //        "URL",
-  //        newRecipe
-  //      )
-  //      .then((res) => {
-  //        setNewRecipe(res.data);
-  //        push("/recipes");
-  //        console.log(res.data, "posting data");
-  //      })
-  //      .catch((err) => {
-  //        console.log(err, "error posting new item");
-  //      });
-  //    handleSubmit();
-  //  };
+  
 
   return (
     <FormContainer>
@@ -91,65 +69,78 @@ const AddRecipe = () => {
             <Input
               type="text"
               name="title"
-              id="title"
               placeholder="Recipe Title"
               onChange={handleChange}
               value={newRecipe.title}
             />
           </label>
-          <label htmlFor="creator">
+          <label htmlFor="creator"> 
             <h2>Creator:</h2>
             <Input
               type="text"
-              name="source"
-              id="source"
+              name="author"
               placeholder="Who created this?"
               onChange={handleChange}
-              value={newRecipe.source}
+              value={newRecipe.author}
             />
           </label>
-          <label htmlFor="Category">
-            <h2>Category:</h2>
+          <label htmlFor="Category"> 
+  
+            <Select name="category" value={newRecipe.category} onChange={handleChange}>
+              <option value="">Add category</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
 
-            <Select>
-              <option>Add category</option>
-              <option>Lunch</option>
-              <option>Breakfast</option>
-              <option>Dinner</option>
-              <option>Cookies</option>
-              <option>Dessert</option>
-              <option>Bread</option>
-              <option>Salad</option>
-              <option>Soup</option>
-            </Select>
-          </label>
-          <label htmlFor="ingredients">
-            <h2>Ingredients:</h2>
-          </label>
-          <Input
-            type="textarea"
-            name="ingredients"
-            id="ingredients"
-            placeholder="List of ingredients..."
-            onChange={handleChange}
-            value={newRecipe.ingredients}
-          />
-          <label htmlFor="Instructions">
-            <h2>Instructions:</h2>
-            <Input
-              rows="550"
-              cols="550"
-              type="textarea"
-              name="instructions"
-              id="instructions"
-              placeholder="Step by step instructions..."
-              onChange={handleChange}
-              value={newRecipe.instructions}
-            />
-          </label>
+            </Select> 
+          </label> 
+          
+          
           <Button type="submit">Add Recipe</Button>
         </InputContainer>
+       </form>
+      <Ingredient />
+      <Instructions />
+      {/* <form>
+        <InputContainer>
+          <label htmlFor="ingredients">
+                <h2>Ingredients:</h2>
+              </label>
+              <Input
+                type="textarea"
+                name="ingredient_amount"
+                placeholder="Amount"
+                onChange={handleChange}
+                value={ingredients.ingredient_amount}
+              />
+            <label htmlFor="ingredients">
+                <h2>Ingredients:</h2>
+            </label>
+            <Input
+              type="textarea"
+              name="ingredient_name"
+              placeholder="Ingredient Name"
+              onChange={handleChange}
+              value={ingredients.ingredient_name}
+            />
+        </InputContainer>
       </form>
+      <form>
+        <InputContainer>
+          <label htmlFor="Instructions">
+                <h2>Instructions:</h2>
+                <Input
+                  // rows="550"
+                  // cols="550"
+                  type="textarea"
+                  name="instruction_description"
+                  placeholder="Step by step instructions..."
+                  onChange={handleChange}
+                  value={instructions.instruction_description}
+                />
+            </label>
+        </InputContainer>
+      </form> */}
     </FormContainer>
   );
 };
@@ -168,7 +159,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 4rem;
+  margin: 1rem;
 `;
 const Input = styled.input`
   border: 2px solid darkgrey;

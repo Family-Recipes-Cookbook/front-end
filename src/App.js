@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "./helpers/PrivatRoute";
 
 // components
 import Navigation from "./Navigation";
@@ -19,14 +20,14 @@ function App() {
       <Navigation />
       <div className="realApp">
         <Switch>
-          <Route path="/addrecipe" component={AddNewRecipe} />
-          <Route path="/editrecipe" component={EditRecipe} />
-          <Route path="/recipecard" component={RecipeCard} />
-          <Route path="/recipes" component={RecipeList} />
+          <Route exact path="/" component={LoginForm} />
+          <PrivateRoute path="/addrecipe" component={AddNewRecipe} />
+          <PrivateRoute path="/editrecipe" component={EditRecipe} />
+          <PrivateRoute path="/recipe/:id" component={RecipeCard} />
+          <PrivateRoute path="/recipes" component={RecipeList} />
           <Route path="/registration" component={RegistrationForm} />
-          <Route path="/login" component={LoginForm} />
 
-          <Route path="/" component={RecipeList} />
+         
         </Switch>
       </div>
     </div>
