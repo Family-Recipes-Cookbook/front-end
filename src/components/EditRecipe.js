@@ -1,43 +1,45 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+
 // import styled from "styled-components";
 import {
   FormContainer,
   InputContainer,
   Input,
-  Select,
   Button,
 } from "./StyledComponents";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
-const initialState = {
-  title: "",
-  source: "",
-  ingredients: "",
-  instructions: "",
-  category: "",
-};
+// const initialState = {
+//   title: "",
+//   source: "",
+//   ingredients: "",
+//   instructions: "",
+//   category: "",
+// };
 
 const EditRecipe = () => {
   const { id } = useParams();
   const history = useHistory();
-  const [recipe, setRecipe] = useState(initialState);
+  const [recipe, setRecipe] = useState([]);
   const [ ingredient, setIngredient ] = useState({ingredient_amount: '', ingredient_name: ''});
   const [ instruction, setInstruction ] = useState({instruction_description: ""})
 
   useEffect(() => {
-    axios
-      .get(`https://tt18familyrecipe.herokuapp.com/api/recipes/1`)
+    axiosWithAuth()
+      .get(`https://tt18familyrecipe.herokuapp.com/api/recipes/${id}`)
       .then((res) => {
         console.log("edit recipe get response", res.data);
         setRecipe(res.data);
+        
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  console.log(recipe.title)
+  
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ ]);
+  
   const changeIngredient = (ev) => {
     
     setIngredient({ ...ingredient, [ev.target.name]: ev.target.value });

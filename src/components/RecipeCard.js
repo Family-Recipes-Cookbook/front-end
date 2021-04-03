@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { connect } from 'react-redux';
-import styled from "styled-components";
+import React from "react";
+
+
 import { Title, FormContainer, Button } from "./StyledComponents";
-import { useHistory, useParams } from "react-router-dom";
-import { axiosWithAuth } from "../helpers/axiosWithAuth";
-import { fetchRecipeById } from "../actions/index"
+import { useHistory } from "react-router-dom";
+
+
 
 // const RecipeCard = ({ recipe }) => {
 //   const history = useHistory()
@@ -17,7 +17,7 @@ const RecipeCard = (props) => {
   const { recipe, ingredients, instructions } = props
   
   const history = useHistory()
-  const {id} = useParams()
+  
   // const [edit, setEdit] = useState(false);
   const deleteRecipe = () => {
     // axiosWithAuth().delete(`/recipes/${id}`, recipe)
@@ -47,10 +47,10 @@ const RecipeCard = (props) => {
           <h3>{recipe.category}</h3>
        
           {ingredients.map((ingredient)=>{
-
+ 
             return (
             <>
-            <Title ingredient={ingredient.recipe_id}> Ingredients: </Title>
+            <Title key={ingredient.recipe_id}> Ingredients: </Title>
              <h3>{ingredient.ingredient_amount}</h3>
              <h3>{ingredient.ingredient_name}</h3>
             </>
@@ -68,7 +68,7 @@ const RecipeCard = (props) => {
         <Button
           className="edit-button"
           onClick={() => {
-            history.push("/editrecipe")
+            history.push(`/editrecipe/${recipe.recipe_id}`)
           }}
         >
           EDIT

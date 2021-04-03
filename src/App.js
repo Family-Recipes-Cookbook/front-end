@@ -12,7 +12,7 @@ import RegistrationForm from "./components/Register";
 import LoginForm from "./components/Login";
 
 import "./App.css";
-import RecipeCard from "./components/RecipeCard";
+// import RecipeCard from "./components/RecipeCard";
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={LoginForm} />
           <PrivateRoute path="/addrecipe" component={AddNewRecipe} />
-          <PrivateRoute path="/editrecipe" component={EditRecipe} />
-          <PrivateRoute path="/recipe/:id" component={RecipeCard} />
+          <PrivateRoute path="/editrecipe/:id" component={EditRecipe} />
+          {/* <PrivateRoute path="/recipe/" component={RecipeCard} /> */}
           <PrivateRoute path="/recipes" component={RecipeList} />
           <Route path="/registration" component={RegistrationForm} />
 

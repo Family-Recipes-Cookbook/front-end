@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
-import { connect } from 'react-redux';
-import { Link, useHistory, useParams } from "react-router-dom";
+
+
 // import styled from "styled-components";
-import { Question, FormContainer, Input, Button } from "./StyledComponents";
-import { Row, Col } from "reactstrap";
+import {  FormContainer, Input, Button } from "./StyledComponents";
+import { Row } from "reactstrap";
 // import axios from "axios";
 import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
@@ -13,8 +13,8 @@ import { axiosWithAuth } from "../helpers/axiosWithAuth";
 const RecipeList = (props) => {
   const [allRecipes, setAllRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const history = useHistory()
-  // const { id } = useParams()
+  
+  
   // const userId = Number(localStorage.getItem("userId"));
   // const [isFetching, setIsFetching] = useState(true);
 
@@ -39,6 +39,16 @@ const RecipeList = (props) => {
     event.preventDefault();
   };
 
+  // const handleDelete = (e) => {
+  //   const url = `https://tt18familyrecipe.herokuapp.com/api/recipes/${recipes.id}`;
+    
+  //   axios
+  //   .delete(url)
+  //   .then(res => {
+  //     const deleteRecipe = this.state.?.filter( item => item.id !== id);
+  //     this.setState({posts})
+  //   })
+  // }
   return (
     <FormContainer>
       <h1>RECIPE LIST</h1>
@@ -96,10 +106,5 @@ const RecipeList = (props) => {
     </FormContainer>
   );
 };
-const mapsStateToProps = state => {
-  return {
-      recipe: state.recipe,
-      
-  }
-}
-export default connect(mapsStateToProps, {})(RecipeList) ;
+
+export default RecipeList ;

@@ -12,7 +12,6 @@ import
     EDIT_INGREDIENT, 
     EDIT_INSTRUCTION, 
     DELETE_RECIPE, 
-    SET_ERROR 
 } 
 from '../actions/index'
 //Task List:

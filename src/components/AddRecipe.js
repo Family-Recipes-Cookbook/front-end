@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { axiosWithAuth } from '../helpers/axiosWithAuth';
 
-import axios from "axios";
+
 // import { Button } from "reactstrap";
 
 const initialState = {
@@ -46,22 +46,22 @@ const AddRecipe = () => {
     .post("/recipes", newRecipe)
     .then(res=>{
       console.log(res.data)
-        axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/ingredients`, ingredients)
-        .then(()=>{
-        })
-        .catch(err=>{
-          console.log(err)
-        })
+        // axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/ingredients`, ingredients)
+        // .then(()=>{
+        // })
+        // .catch(err=>{
+        //   console.log(err)
+        // })
       })
-    .then((res)=>{
-      debugger
-      axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/instructions`, instructions)
-        .then(()=>{
-        })
-        .catch(err=>{
-          console.log(err)
-        })
-      })
+    // .then((res)=>{
+    //   debugger
+    //   axios.post(`https://tt18familyrecipe.herokuapp.com/api/recipes/${res.data.recipe_id}/instructions`, instructions)
+    //     .then(()=>{
+    //     })
+    //     .catch(err=>{
+    //       console.log(err)
+    //     })
+    //   })
     .catch(err=>{
       console.log("Adding Recipe Unsuccessfull: ", err.response)
     })
