@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   FormContainer,
   InputContainer,
@@ -9,6 +8,8 @@ import {
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import schema from "../validation/login_schema";
+import axios from "axios";
+import { useHistory } from "react-router";
 
 //////////INITIAL VALUES//////////
 
@@ -30,10 +31,18 @@ const Login = () => {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
   //////////HELPERS//////////
-
+  const history = useHistory()
   const postLogin = (cleanFormValues) => {
-    // axios
-    alert(cleanFormValues);
+    axios.post("https://tt18familyrecipe.herokuapp.com/api/auth/login", cleanFormValues)
+    .then(res=>{
+      console.log("login success", res.data)
+      alert(res.data.message)
+      localStorage.setItem('token', res.data.token)
+      history.push("/recipes")
+    })
+    .catch(err=>{
+      console.log("login unsuccessful: ", err.response)
+    })
   };
   //////////EVENT HANDLERS//////////
 
@@ -73,6 +82,7 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     submitForm();
+    
   };
   //////////EFFECTS//////////
 
@@ -93,7 +103,7 @@ const Login = () => {
             <Input
               name="username"
               type="text"
-              value={formValues.name}
+              value={formValues.username}
               onChange={onChange}
               placeholder="Username"
             />

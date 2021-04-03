@@ -13,7 +13,8 @@ const FormContainer = styled.div`
   border: 1px solid darkgrey;
   border-radius: 20px;
   color: #0e2923;
-  margin: 3rem 16rem;
+  width: 70%;
+  margin: auto;
   padding: 2rem;
   text-align: center;
 
@@ -24,7 +25,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 4rem;
+  /* margin: 4rem; */
 
   .error-message {
     color: red;

@@ -15,7 +15,7 @@ html {
 .nav {
   display: flex;
   justify-content: center;
-
+  margin: auto;
   background: #c8ffcb;
   background: -moz-radial-gradient(center, #c8ffcb 0%, #ffffff 100%);
   background: -webkit-radial-gradient(center, #c8ffcb 0%, #ffffff 100%);
